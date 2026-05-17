@@ -1,0 +1,14 @@
+<Solution>
+  <Folder Name="/Core/">
+    <Project Path="Core/ETicaretAPI.Application/ETicaretAPI.Application.csproj" />
+    <Project Path="Core/ETicaretAPI.Domain/ETicaretAPI.Domain.csproj" />
+  </Folder>
+  <Folder Name="/Infrastructure/">
+    <Project Path="Infrastructure/ETicaretAPI.Infrastructure/ETicaretAPI.Infrastructure.csproj" />
+    <Project Path="Infrastructure/ETicaretAPI.Persistence/ETicaretAPI.Persistence.csproj" />
+    <Project Path="Infrastructure/ETicaretAPI.SignalR/ETicaretAPI.SignalR.csproj" Id="ae3c46d5-cac3-4322-8cb6-8c6af2a8385b" />
+  </Folder>
+  <Folder Name="/Presentation/">
+    <Project Path="Presentation/ETicaretAPI.API/ETicaretAPI.API.csproj" />
+  </Folder>
+</Solution>

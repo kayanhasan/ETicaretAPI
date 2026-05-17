@@ -1,4 +1,5 @@
-﻿using ETicaretAPI.Application.Repositories;
+﻿using ETicaretAPI.Application.DTOs.Product;
+using ETicaretAPI.Application.Repositories;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -25,15 +26,15 @@ namespace ETicaretAPI.Application.Features.Queries.Product.GetAllProduct
 
             var products = _productReadRepository.GetAll(false).Skip(request.Page * request.Size).Take(request.Size)
                 .Include(p => p.ProductImageFiles)
-                .Select(p => new
+                .Select(p => new ProductListDto
                 {
-                    p.Id,
-                    p.Name,
-                    p.Stock,
-                    p.Price,
-                    p.CreatedDate,
-                    p.UpdatedDate,
-                    p.ProductImageFiles
+                    Id = p.Id,
+                    Name = p.Name,
+                    Stock = p.Stock,
+                    Price = p.Price,
+                    CreatedDate = p.CreatedDate,
+                    UpdatedDate = p.UpdatedDate,
+                    ProductImageFiles = p.ProductImageFiles
                 }).ToList();
 
             return new()

@@ -1,0 +1,23 @@
+services:
+  redis:
+    image: redis:latest
+    container_name: eticaret_redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    restart: always
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: eticaret_rabbitmq
+    ports:
+      - "5672:5672"   # Uygulamanın bağlanacağı port
+      - "15672:15672" # RabbitMQ Yönetim Paneli (Arayüz)
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    restart: always
+
+volumes:
+  redis_data:
+  rabbitmq_data:

@@ -1,4 +1,5 @@
-﻿using ETicaretAPI.Application.Repositories;
+﻿using ETicaretAPI.Application.Abstractions.Caching;
+using ETicaretAPI.Application.Repositories;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
@@ -12,12 +13,13 @@ namespace ETicaretAPI.Application.Features.Commands.Product.UpdateProduct
         readonly IProductReadRepository _productReadRepository;
         readonly IProductWriteRepository _productWriteRepository;
         readonly ILogger<UpdateProductCommandHandler> _logger;
-
-        public UpdateProductCommandHandler(IProductReadRepository productReadRepository, IProductWriteRepository productWriteRepository, ILogger<UpdateProductCommandHandler> logger)
+        private readonly ICacheService _cacheService;
+        public UpdateProductCommandHandler(IProductReadRepository productReadRepository, IProductWriteRepository productWriteRepository, ILogger<UpdateProductCommandHandler> logger, ICacheService cacheService)
         {
             _productReadRepository = productReadRepository;
             _productWriteRepository = productWriteRepository;
             _logger = logger;
+            _cacheService = cacheService;
         }
 
         public async Task<UpdateProductCommandResponse> Handle(UpdateProductCommandRequest request, CancellationToken cancellationToken)
@@ -27,6 +29,7 @@ namespace ETicaretAPI.Application.Features.Commands.Product.UpdateProduct
             product.Name = request.Name;
             product.Price = request.Price;
             await _productWriteRepository.SaveAsync();
+            await _cacheService.RemoveByPatternAsync("products-all-*");
             _logger.LogInformation("Product güncellendi...");
             return new();
         }

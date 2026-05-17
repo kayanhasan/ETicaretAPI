@@ -2,6 +2,7 @@ using ETicaretAPI.API.Configurations.ColumnWriters;
 using ETicaretAPI.API.Extensions;
 using ETicaretAPI.API.Filters;
 using ETicaretAPI.Application;
+using ETicaretAPI.Application.Behaviors;
 using ETicaretAPI.Application.Validators.Products;
 using ETicaretAPI.Infrastructure;
 using ETicaretAPI.Infrastructure.Filters;
@@ -11,6 +12,7 @@ using ETicaretAPI.Persistence;
 using ETicaretAPI.SignalR;
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.HttpLogging;
 using Microsoft.IdentityModel.Tokens;
@@ -30,7 +32,7 @@ builder.Services.AddPersistenceServices();
 builder.Services.AddApplicationServices();
 //builder.Services.AddAuthentication();
 builder.Services.AddSignalRServices();
-
+builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(CacheBehavior<,>));
 // Add services to the container.
 //builder.Services.AddStorage(StorageType.Local);
 //builder.Services.AddStorage<LocalStorage>();

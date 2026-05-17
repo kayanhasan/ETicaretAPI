@@ -62,5 +62,12 @@ namespace ETicaretAPI.Infrastructure.Services
 
         }
 
+        public async Task SendOrderReceivedMailAsync(string to, string orderCode, DateTime orderDate, string userName)
+        {
+            string mail = $"Sayın {userName} Merhaba<br>" +
+                $"{orderDate} tarihinde vermiş olduğunuz {orderCode} kodlu siparişiniz alınmıştır.";
+
+            await SendMailAsync(to, $"{orderCode} Sipariş Numaralı Siparişiniz Beklemede", mail);
+        }
     }
 }
